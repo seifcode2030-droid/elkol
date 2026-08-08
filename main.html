@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مختبر الكيمياء التفاعلي | Chem Lab Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- ===== الخلفية ===== -->
+    <div class="background">
+        <canvas id="bgCanvas"></canvas>
+        <div class="glow glow1"></div>
+        <div class="glow glow2"></div>
+        <div class="glow glow3"></div>
+        <div class="grid-overlay"></div>
+    </div>
+
+    <!-- ===== الشريط العلوي ===== -->
+    <header class="topbar">
+        <div class="logo">
+            <div class="logo-icon">🧪</div>
+            <div class="logo-text">
+                <h1>مختبر الكيمياء</h1>
+                <span>CHEM LAB PRO</span>
+            </div>
+        </div>
+
+        <div class="lab-status">
+            <div class="status-chip" id="tempStatus">
+                <span class="status-icon">🌡</span>
+                <span class="status-label">الحرارة</span>
+                <span class="status-value" id="tempValue">25°C</span>
+            </div>
+            <div class="status-chip" id="electricStatus">
+                <span class="status-icon">⚡</span>
+                <span class="status-label">كهرباء</span>
+                <span class="status-value" id="electricValue">متوقفة</span>
+            </div>
+            <div class="status-chip" id="catalystStatus">
+                <span class="status-icon">🧫</span>
+                <span class="status-label">محفز</span>
+                <span class="status-value" id="catalystValue">0</span>
+            </div>
+        </div>
+
+        <div class="header-buttons">
+            <button class="btn btn-ghost" id="eduBtn" title="الوضع التعليمي">
+                🎓 <span>تعليمي</span>
+            </button>
+            <button class="btn btn-danger" id="resetBtn">
+                ♻ <span>إعادة ضبط</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===== المحتوى الرئيسي ===== -->
+    <main class="layout">
+
+        <!-- ===== اللوحة اليسرى: الأدوات ===== -->
+        <aside class="panel tools-panel glass">
+            <div class="panel-header">
+                <div class="panel-title-icon">🔬</div>
+                <h2>أدوات المختبر</h2>
+                <span class="panel-subtitle">LAB TOOLS</span>
+            </div>
+
+            <div class="tools-container">
+                <button class="tool-btn heat-tool" data-tool="heat">
+                    <div class="tool-icon">🔥</div>
+                    <span class="tool-name">تسخين</span>
+                    <span class="tool-desc">رفع درجة الحرارة</span>
+                </button>
+
+                <button class="tool-btn cold-tool" data-tool="cold">
+                    <div class="tool-icon">❄️</div>
+                    <span class="tool-name">تبريد</span>
+                    <span class="tool-desc">خفض درجة الحرارة</span>
+                </button>
+
+                <button class="tool-btn electric-tool" data-tool="electric">
+                    <div class="tool-icon">⚡</div>
+                    <span class="tool-name">كهرباء</span>
+                    <span class="tool-desc">تحليل كهربائي</span>
+                </button>
+
+                <button class="tool-btn catalyst-tool" data-tool="catalyst">
+                    <div class="tool-icon">🧫</div>
+                    <span class="tool-name">محفز</span>
+                    <span class="tool-desc">تسريع التفاعل</span>
+                </button>
+
+                <button class="tool-btn clean-tool" id="cleanBtn">
+                    <div class="tool-icon">🧽</div>
+                    <span class="tool-name">تنظيف</span>
+                    <span class="tool-desc">تفريغ البيكرات</span>
+                </button>
+
+                <button class="tool-btn note-tool" id="noteBtn">
+                    <div class="tool-icon">📝</div>
+                    <span class="tool-name">ملاحظات</span>
+                    <span class="tool-desc">دفتر التجارب</span>
+                </button>
+            </div>
+
+            <div class="tools-hint">
+                <span>💡</span>
+                <p>اختر أداة ثم اضغط على البيكر لتطبيقها</p>
+            </div>
+        </aside>
+
+        <!-- ===== المنطقة الوسطى: البيكرات ===== -->
+        <section class="lab-area">
+
+            <div class="lab-header">
+                <h1>منطقة التفاعل</h1>
+                <p>اضغط على أي بيكر لإضافة المواد الكيميائية</p>
+            </div>
+
+            <div class="beakers-zone">
+
+                <!-- بيكر A -->
+                <div class="beaker-card">
+                    <div class="beaker-title">
+                        <span class="beaker-badge badge-a">A</span>
+                        <span>البيكر الأول</span>
+                    </div>
+
+                    <div id="beakerA" class="beaker beaker-a" data-beaker="A">
+                        <div class="beaker-glass">
+                            <div class="liquid liquidA"></div>
+                            <div class="liquid-wave wave1"></div>
+                            <div class="liquid-wave wave2"></div>
+                            <div class="foam foamA"></div>
+                            <div class="bubbles bubblesA"></div>
+                            <div class="steam steamA"></div>
+                            <div class="sparks sparksA"></div>
+                            <div class="precipitate-layer precipA"></div>
+                            <div class="beaker-glow"></div>
+                            <div class="beaker-shine"></div>
+                            <div class="beaker-label">
+                                <span class="empty-hint">اضغط لإضافة مادة</span>
+                            </div>
+                        </div>
+                        <div class="beaker-stand"></div>
+                    </div>
+
+                    <div id="contentA" class="beaker-content">
+                        <span class="content-empty">فارغ</span>
+                    </div>
+                </div>
+
+                <!-- زر التفاعل -->
+                <div class="mix-center">
+                    <div class="mix-arrow">⬇</div>
+                    <button id="mixBtn" class="btn btn-primary mix-btn">
+                        <span class="mix-icon">⚗️</span>
+                        <span>تشغيل التفاعل</span>
+                    </button>
+                    <div class="mix-arrow">⬇</div>
+                </div>
+
+                <!-- بيكر B -->
+                <div class="beaker-card">
+                    <div class="beaker-title">
+                        <span class="beaker-badge badge-b">B</span>
+                        <span>البيكر الثاني</span>
+                    </div>
+
+                    <div id="beakerB" class="beaker beaker-b" data-beaker="B">
+                        <div class="beaker-glass">
+                            <div class="liquid liquidB"></div>
+                            <div class="liquid-wave wave1"></div>
+                            <div class="liquid-wave wave2"></div>
+                            <div class="foam foamB"></div>
+                            <div class="bubbles bubblesB"></div>
+                            <div class="steam steamB"></div>
+                            <div class="sparks sparksB"></div>
+                            <div class="precipitate-layer precipB"></div>
+                            <div class="beaker-glow"></div>
+                            <div class="beaker-shine"></div>
+                            <div class="beaker-label">
+                                <span class="empty-hint">اضغط لإضافة مادة</span>
+                            </div>
+                        </div>
+                        <div class="beaker-stand"></div>
+                    </div>
+
+                    <div id="contentB" class="beaker-content">
+                        <span class="content-empty">فارغ</span>
+                    </div>
+                </div>
+
+                <!-- بيكر النتيجة -->
+                <div class="result-section">
+                    <div class="result-arrow">
+                        <span>⬇</span>
+                        <span class="result-arrow-label">الناتج</span>
+                    </div>
+
+                    <div class="beaker-card result-card">
+                        <div class="beaker-title result-title">
+                            <span class="beaker-badge badge-r">★</span>
+                            <span>بيكر النتيجة</span>
+                        </div>
+
+                        <div id="resultBeaker" class="beaker result-beaker">
+                            <div class="beaker-glass">
+                                <div class="liquid result-liquid"></div>
+                                <div class="liquid-wave wave1"></div>
+                                <div class="liquid-wave wave2"></div>
+                                <div class="foam foamR"></div>
+                                <div class="bubbles bubblesR"></div>
+                                <div class="steam steamR"></div>
+                                <div class="sparks sparksR"></div>
+                                <div class="precipitate-layer precipR"></div>
+                                <div class="beaker-glow"></div>
+                                <div class="beaker-shine"></div>
+                                <div class="beaker-label">
+                                    <span class="empty-hint">لا يوجد ناتج</span>
+                                </div>
+                            </div>
+                            <div class="beaker-stand"></div>
+                        </div>
+
+                        <div id="resultContent" class="beaker-content result-content">
+                            <span class="content-empty">فارغ</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ===== لوحة معلومات التفاعل ===== -->
+            <div class="reaction-info-panel glass">
+                <div class="info-header">
+                    <h3>📊 معلومات التفاعل</h3>
+                    <span class="info-status" id="reactionStatus">بانتظار التجربة</span>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-box equation-box">
+                        <span class="info-label">المعادلة الكيميائية</span>
+                        <div id="equationText" class="info-value equation-text">لا يوجد تفاعل بعد</div>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">نوع التفاعل</span>
+                        <div id="reactionType" class="info-value">—</div>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">الناتج</span>
+                        <div id="resultName" class="info-value">لا يوجد</div>
+                        <div id="resultFormula" class="info-formula">—</div>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">الطاقة</span>
+                        <div id="energyInfo" class="info-value">—</div>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">سرعة التفاعل</span>
+                        <div class="speed-bar">
+                            <div id="speedFill" class="speed-fill"></div>
+                        </div>
+                        <div id="speedValue" class="info-value small">—</div>
+                    </div>
+
+                    <div class="info-box">
+                        <span class="info-label">العائد</span>
+                        <div id="yieldValue" class="info-value">—</div>
+                    </div>
+                </div>
+
+                <div class="info-description" id="reactionDescription">
+                    أضف المواد إلى البيكرين ثم اضغط "تشغيل التفاعل"
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ===== اللوحة اليمنى: قاعدة المواد ===== -->
+        <aside class="panel materials-panel glass">
+            <div class="panel-header">
+                <div class="panel-title-icon">🧪</div>
+                <h2>قاعدة المواد</h2>
+                <span class="panel-subtitle">MATERIALS DB</span>
+            </div>
+
+            <div class="materials-search">
+                <input type="text" id="materialSearch" placeholder="🔍 ابحث عن مادة...">
+            </div>
+
+            <div class="materials-filters">
+                <button class="filter-btn active" data-filter="all">الكل</button>
+                <button class="filter-btn" data-filter="element">عناصر</button>
+                <button class="filter-btn" data-filter="acid">أحماض</button>
+                <button class="filter-btn" data-filter="base">قواعد</button>
+                <button class="filter-btn" data-filter="salt">أملاح</button>
+                <button class="filter-btn" data-filter="liquid">سوائل</button>
+                <button class="filter-btn" data-filter="gas">غازات</button>
+            </div>
+
+            <div id="materialsContainer" class="materials-container">
+                <!-- تُملأ من JS -->
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- ===== نافذة اختيار المواد ===== -->
+    <div id="materialPicker" class="modal-overlay">
+        <div class="modal-box picker-box glass">
+            <div class="modal-header">
+                <h2>🧪 اختر مادة كيميائية</h2>
+                <button class="modal-close" id="closePicker">✖</button>
+            </div>
+            <div class="picker-search">
+                <input type="text" id="pickerSearch" placeholder="🔍 ابحث عن مادة...">
+            </div>
+            <div id="pickerMaterials" class="picker-materials">
+                <!-- تُملأ من JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== نافذة الملاحظات ===== -->
+    <div id="notesModal" class="modal-overlay">
+        <div class="modal-box notes-box glass">
+            <div class="modal-header">
+                <h2>📝 دفتر الملاحظات</h2>
+                <button class="modal-close" id="closeNotes">✖</button>
+            </div>
+            <textarea id="notesArea" placeholder="اكتب ملاحظات تجربتك هنا... يتم الحفظ تلقائيًا"></textarea>
+            <div class="notes-footer">
+                <span>💾 يتم الحفظ تلقائيًا في المتصفح</span>
+                <button class="btn btn-primary" id="clearNotes">مسح</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== نافذة المعلومات التعليمية ===== -->
+    <div id="eduModal" class="modal-overlay">
+        <div class="modal-box edu-box glass">
+            <div class="modal-header">
+                <h2>🎓 الوضع التعليمي</h2>
+                <button class="modal-close" id="closeEdu">✖</button>
+            </div>
+            <div id="eduContent" class="edu-content">
+                <div class="edu-welcome">
+                    <h3>مرحبًا بك في المختبر التعليمي!</h3>
+                    <p>اضغط على أي مادة في قاعدة المواد لعرض معلوماتها التفصيلية، أو قم بتشغيل تفاعل لعرض الشرح التعليمي.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== نافذة معلومات المادة ===== -->
+    <div id="materialInfoModal" class="modal-overlay">
+        <div class="modal-box material-info-box glass">
+            <div class="modal-header">
+                <h2 id="materialInfoTitle">معلومات المادة</h2>
+                <button class="modal-close" id="closeMaterialInfo">✖</button>
+            </div>
+            <div id="materialInfoContent" class="material-info-content">
+                <!-- تُملأ من JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== نافذة التنبيه ===== -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- ===== مؤشر التحميل ===== -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-flask">🧪</div>
+            <h2>مرحبًا في مختبر الاستاذ سامح للتجارب الكيميائية</h2>
+            <h2>تنفيذ عبدالراضي سامح</h2>
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
