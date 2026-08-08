@@ -1,0 +1,756 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Cairo", sans-serif;
+    background: #050b16;
+    color: white;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at top, #0d1f3f, #050b16 60%),
+        radial-gradient(circle at bottom, #071222, #000000);
+    z-index: -3;
+}
+
+.background::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(#ffffff33 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: .25;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+header h1 {
+    font-size: 3rem;
+    color: #00d4ff;
+    text-shadow: 0 0 25px #00d4ff;
+}
+
+header p {
+    margin-top: 10px;
+    color: #c8e9ff;
+    font-size: 1.1rem;
+}
+
+/* =========================
+   MAIN LAYOUT
+========================= */
+
+.container {
+    width: 95%;
+    max-width: 1600px;
+    margin: auto;
+    display: grid;
+    gap: 25px;
+}
+
+.controls {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+    background: #0b1627;
+    border: 1px solid #1b355c;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow:
+        0 0 15px rgba(0, 212, 255, .08);
+}
+
+.card h2 {
+    text-align: center;
+    color: #00d4ff;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: bold;
+    transition: .3s;
+}
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: scale(.95);
+}
+
+#loadElement,
+#saveAtom,
+#loadAtom,
+#resetAtom {
+    width: 100%;
+    margin-top: 8px;
+}
+
+#loadElement {
+    background: #00d4ff;
+}
+
+#saveAtom {
+    background: #00ff88;
+}
+
+#loadAtom {
+    background: #ffc107;
+}
+
+#resetAtom {
+    background: #ff4d4d;
+    color: white;
+}
+
+/* =========================
+   COUNTERS
+========================= */
+
+.card span {
+    display: inline-block;
+    min-width: 50px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.card button {
+    width: 40px;
+    height: 40px;
+}
+
+/* =========================
+   ATOM WORKSPACE
+========================= */
+
+.atom-zone {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+#atomContainer {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* =========================
+   ORBITS
+========================= */
+
+.orbit {
+    position: absolute;
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 50%;
+    animation: rotateOrbit 25s linear infinite;
+}
+
+.orbit1 {
+    width: 120px;
+    height: 120px;
+}
+
+.orbit2 {
+    width: 180px;
+    height: 180px;
+}
+
+.orbit3 {
+    width: 240px;
+    height: 240px;
+}
+
+.orbit4 {
+    width: 300px;
+    height: 300px;
+}
+
+.orbit5 {
+    width: 360px;
+    height: 360px;
+}
+
+.orbit6 {
+    width: 420px;
+    height: 420px;
+}
+
+.orbit7 {
+    width: 500px;
+    height: 500px;
+}
+
+@keyframes rotateOrbit {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* =========================
+   NUCLEUS
+========================= */
+
+#nucleus {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle, #ff7777, #ff2222);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: relative;
+
+    box-shadow:
+        0 0 20px #ff3333,
+        0 0 60px #ff2222,
+        0 0 120px rgba(255, 0, 0, .4);
+
+    animation: nucleusPulse 2s infinite;
+}
+
+@keyframes nucleusPulse {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+.nucleus-glow {
+    position: absolute;
+    inset: -25px;
+    border-radius: 50%;
+
+    background:
+        radial-gradient(circle,
+            rgba(255, 0, 0, .25),
+            transparent 70%);
+
+    z-index: -1;
+}
+
+/* =========================
+   CENTER SYMBOL
+========================= */
+
+.nucleus-center {
+    font-size: 2rem;
+    font-weight: 900;
+    color: white;
+    text-shadow:
+        0 0 15px white;
+}
+
+/* =========================
+   PROTONS
+========================= */
+
+.proton {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+
+    background: #ff0000;
+
+    position: absolute;
+
+    box-shadow:
+        0 0 10px red;
+}
+
+/* =========================
+   NEUTRONS
+========================= */
+
+.neutron {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+
+    background: #d9d9d9;
+
+    position: absolute;
+
+    box-shadow:
+        0 0 10px white;
+}
+
+/* =========================
+   ELECTRONS
+========================= */
+
+.electron {
+    width: 14px;
+    height: 14px;
+
+    border-radius: 50%;
+
+    background: #00d4ff;
+
+    position: absolute;
+
+    box-shadow:
+        0 0 10px #00d4ff,
+        0 0 20px #00d4ff;
+
+    animation: electronPulse 1s infinite;
+}
+
+@keyframes electronPulse {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.25);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+/* =========================
+   ELECTRON LAYER
+========================= */
+
+#electronsLayer {
+    position: absolute;
+    inset: 0;
+}
+
+/* =========================
+   PROTON / NEUTRON LAYERS
+========================= */
+
+#protonsLayer,
+#neutronsLayer {
+    position: absolute;
+    inset: 0;
+}
+
+/* =========================
+   SIMULATION BUTTONS
+========================= */
+
+.simulation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.simulation-buttons button {
+    min-width: 120px;
+    background: #12253f;
+    color: white;
+}
+
+.simulation-buttons button:hover {
+    background: #00d4ff;
+    color: black;
+}
+
+/* =========================
+   INFO PANEL
+========================= */
+
+.info-panel {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.info-card {
+    background: #0b1627;
+    border: 1px solid #1b355c;
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.info-card h2 {
+    color: #00d4ff;
+    margin-bottom: 15px;
+}
+
+.info-card p {
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.info-card span {
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* =========================
+   SHELL INFO
+========================= */
+
+#shellInfo {
+    margin-top: 10px;
+    list-style: none;
+}
+
+#shellInfo li {
+    padding: 6px;
+    border-bottom:
+        1px solid rgba(255, 255, 255, .08);
+}
+
+/* =========================
+   PERIODIC TABLE
+========================= */
+
+.periodic-section {
+    margin-top: 30px;
+}
+
+.periodic-section h2 {
+    text-align: center;
+    color: #00d4ff;
+    margin-bottom: 15px;
+}
+
+#periodicTable {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fill, minmax(70px, 1fr));
+
+    gap: 8px;
+}
+
+.element-btn {
+    background: #102038;
+    color: white;
+    border: 1px solid #1d4d7a;
+
+    padding: 12px 5px;
+    border-radius: 12px;
+
+    font-weight: bold;
+}
+
+.element-btn:hover {
+    background: #00d4ff;
+    color: black;
+}
+
+/* =========================
+   ADVANCED SECTION
+========================= */
+
+.advanced-section {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(250px, 1fr));
+
+    gap: 20px;
+}
+
+.advanced-card {
+    background: #0b1627;
+    border-radius: 18px;
+    padding: 20px;
+    border: 1px solid #1b355c;
+}
+
+.advanced-card h3 {
+    color: #00d4ff;
+    margin-bottom: 15px;
+}
+
+.property {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0;
+}
+
+/* =========================
+   STABILITY BAR
+========================= */
+
+.stability-meter,
+.radiation-meter {
+    width: 100%;
+    height: 16px;
+
+    background: #09101a;
+
+    border-radius: 20px;
+    overflow: hidden;
+
+    margin-top: 10px;
+}
+
+.stability-fill {
+    width: 80%;
+    height: 100%;
+
+    background:
+        linear-gradient(90deg,
+            #00ff88,
+            #00d4ff);
+}
+
+.radiation-fill {
+    width: 20%;
+    height: 100%;
+
+    background:
+        linear-gradient(90deg,
+            yellow,
+            red);
+}
+
+/* =========================
+   EVENT LOG
+========================= */
+
+.log-section {
+    margin-top: 30px;
+}
+
+.log-section h2 {
+    color: #00d4ff;
+    margin-bottom: 15px;
+}
+
+#eventLog {
+    background: #07111d;
+    border-radius: 18px;
+    padding: 15px;
+
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.log-item {
+    padding: 8px;
+    margin-bottom: 8px;
+
+    border-right:
+        4px solid #00d4ff;
+
+    background: #0c1b2f;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    position: fixed;
+    inset: 0;
+
+    display: none;
+
+    justify-content: center;
+    align-items: center;
+
+    background:
+        rgba(0, 0, 0, .75);
+
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #0b1627;
+
+    width: 90%;
+    max-width: 600px;
+
+    border-radius: 20px;
+    padding: 25px;
+
+    border:
+        1px solid #00d4ff;
+}
+
+.close-btn {
+    cursor: pointer;
+    float: left;
+    font-size: 24px;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 12px;
+
+    margin-top: 20px;
+}
+
+/* =========================
+   EXPLOSION
+========================= */
+
+.explosion-box {
+    text-align: center;
+}
+
+.explosion-box h2 {
+    color: red;
+    font-size: 2rem;
+}
+
+.explosion-box button {
+    margin-top: 20px;
+    background: red;
+    color: white;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #a0b9d6;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px) {
+
+    #atomContainer {
+        width: 450px;
+        height: 450px;
+    }
+
+    .orbit7 {
+        width: 360px;
+        height: 360px;
+    }
+}
+
+@media(max-width:600px) {
+
+    header h1 {
+        font-size: 2rem;
+    }
+
+    #atomContainer {
+        width: 320px;
+        height: 320px;
+    }
+
+    .orbit1 {
+        width: 80px;
+        height: 80px;
+    }
+
+    .orbit2 {
+        width: 120px;
+        height: 120px;
+    }
+
+    .orbit3 {
+        width: 160px;
+        height: 160px;
+    }
+
+    .orbit4 {
+        width: 200px;
+        height: 200px;
+    }
+
+    .orbit5 {
+        width: 240px;
+        height: 240px;
+    }
+
+    .orbit6 {
+        width: 280px;
+        height: 280px;
+    }
+
+    .orbit7 {
+        width: 300px;
+        height: 300px;
+    }
+
+    #nucleus {
+        width: 90px;
+        height: 90px;
+    }
+
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+}

@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>مختبر الذرة المتقدم</title>
+
+    <link rel="stylesheet" href="atom.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div id="background-particles"></div>
+
+    <header class="main-header">
+
+        <div class="logo-area">
+            <h1>⚛ مختبر الذرة المتقدم</h1>
+            <p>محاكاة الذرات والتفاعلات النووية</p>
+        </div>
+
+        <div class="header-buttons">
+
+            <button id="saveAtomBtn">
+                💾 حفظ
+            </button>
+
+            <button id="loadAtomBtn">
+                📂 تحميل
+            </button>
+
+            <button id="resetAtomBtn">
+                ♻ إعادة ضبط
+            </button>
+
+            <button id="exportBtn">
+                📤 تصدير
+            </button>
+
+        </div>
+
+    </header>
+
+    <div class="dashboard">
+
+        <!-- ========================= -->
+        <!-- لوحة التحكم -->
+        <!-- ========================= -->
+
+        <aside class="control-panel">
+
+            <div class="panel-title">
+                التحكم
+            </div>
+
+            <div class="control-card">
+
+                <h3>العنصر</h3>
+
+                <select id="elementSelect">
+                    <option value="">
+                        اختر عنصر
+                    </option>
+                </select>
+
+                <button id="loadElement">
+                    تحميل العنصر
+                </button>
+
+            </div>
+
+            <div class="control-card">
+
+                <h3>البروتونات</h3>
+
+                <div class="counter">
+
+                    <button id="addProton">
+                        +
+                    </button>
+
+                    <span id="protonCount">
+                        1
+                    </span>
+
+                    <button id="removeProton">
+                        -
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="control-card">
+
+                <h3>النيوترونات</h3>
+
+                <div class="counter">
+
+                    <button id="addNeutron">
+                        +
+                    </button>
+
+                    <span id="neutronCount">
+                        0
+                    </span>
+
+                    <button id="removeNeutron">
+                        -
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="control-card">
+
+                <h3>الإلكترونات</h3>
+
+                <div class="counter">
+
+                    <button id="addElectron">
+                        +
+                    </button>
+
+                    <span id="electronCount">
+                        1
+                    </span>
+
+                    <button id="removeElectron">
+                        -
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="control-card">
+
+                <h3>درجة الحرارة</h3>
+
+                <button id="heatBtn">
+                    🔥 تسخين
+                </button>
+
+                <button id="coolBtn">
+                    ❄ تبريد
+                </button>
+
+                <div id="temperatureDisplay">
+                    25°C
+                </div>
+
+            </div>
+
+            <div class="control-card">
+
+                <h3>الإشعاع</h3>
+
+                <button id="alphaBtn">
+                    α ألفا
+                </button>
+
+                <button id="betaBtn">
+                    β بيتا
+                </button>
+
+                <button id="gammaBtn">
+                    γ جاما
+                </button>
+
+            </div>
+
+            <div class="control-card">
+
+                <h3>التفاعلات النووية</h3>
+
+                <button id="fissionBtn">
+                    ☢ انشطار
+                </button>
+
+                <button id="fusionBtn">
+                    ☀ اندماج
+                </button>
+
+                <button id="explodeBtn">
+                    💥 انفجار
+                </button>
+
+            </div>
+
+        </aside>
+
+        <!-- ========================= -->
+        <!-- منطقة الذرة -->
+        <!-- ========================= -->
+
+        <main class="atom-workspace">
+
+            <div class="workspace-title">
+                محاكاة الذرة
+            </div>
+
+            <div id="atomContainer">
+
+                <div class="orbit orbit1"></div>
+                <div class="orbit orbit2"></div>
+                <div class="orbit orbit3"></div>
+                <div class="orbit orbit4"></div>
+
+                <div class="orbit orbit5"></div>
+                <div class="orbit orbit6"></div>
+                <div class="orbit orbit7"></div>
+
+                <div id="nucleus">
+
+                    <div id="protonsLayer"></div>
+
+                    <div id="neutronsLayer"></div>
+
+                </div>
+
+                <div id="electronsLayer"></div>
+
+            </div>
+
+            <div class="simulation-buttons">
+
+                <button id="playSimulation">
+                    ▶ تشغيل
+                </button>
+
+                <button id="pauseSimulation">
+                    ⏸ إيقاف
+                </button>
+
+                <button id="slowMotion">
+                    🐢 بطيء
+                </button>
+
+                <button id="normalSpeed">
+                    ⚡ طبيعي
+                </button>
+
+            </div>
+
+        </main>
+
+        <!-- ========================= -->
+        <!-- المعلومات -->
+        <!-- ========================= -->
+
+        <aside class="info-panel">
+
+            <div class="panel-title">
+                معلومات العنصر
+            </div>
+
+            <div class="info-card">
+
+                <p>
+                    الاسم :
+                    <span id="elementName">
+                        -
+                    </span>
+                </p>
+
+                <p>
+                    الرمز :
+                    <span id="elementSymbol">
+                        -
+                    </span>
+                </p>
+
+                <p>
+                    العدد الذري :
+                    <span id="atomicNumber">
+                        0
+                    </span>
+                </p>
+
+                <p>
+                    الكتلة الذرية :
+                    <span id="atomicMass">
+                        0
+                    </span>
+                </p>
+
+                <p>
+                    الشحنة :
+                    <span id="chargeValue">
+                        0
+                    </span>
+                </p>
+
+            </div>
+
+            <div class="info-card">
+
+                <p>
+                    الحالة :
+                    <span id="stateValue">
+                        -
+                    </span>
+                </p>
+
+                <p>
+                    الفئة :
+                    <span id="categoryValue">
+                        -
+                    </span>
+                </p>
+
+                <p>
+                    السالبية الكهربية :
+                    <span id="electroValue">
+                        -
+                    </span>
+                </p>
+
+                <p>
+                    عدد الروابط :
+                    <span id="bondValue">
+                        -
+                    </span>
+                </p>
+
+                <p>
+                    الاستقرار :
+                    <span id="stabilityValue">
+                        مستقر
+                    </span>
+                </p>
+
+            </div>
+
+            <div class="info-card">
+
+                <h3>الإلكترونات في المدارات</h3>
+
+                <ul id="shellInfo">
+
+                </ul>
+
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- الجدول الدوري -->
+    <!-- ================================= -->
+
+    <section class="periodic-section">
+
+        <h2>
+            الجدول الدوري
+        </h2>
+
+        <div id="periodicTable">
+
+        </div>
+
+    </section>
+
+    <!-- ================================= -->
+    <!-- معلومات متقدمة -->
+    <!-- ================================= -->
+
+    <section class="advanced-section">
+
+        <div class="advanced-card">
+
+            <h3>
+                خصائص الذرة
+            </h3>
+
+            <div class="property">
+
+                <span>
+                    الكثافة
+                </span>
+
+                <span id="densityValue">
+                    -
+                </span>
+
+            </div>
+
+            <div class="property">
+
+                <span>
+                    درجة الانصهار
+                </span>
+
+                <span id="meltingPoint">
+                    -
+                </span>
+
+            </div>
+
+            <div class="property">
+
+                <span>
+                    درجة الغليان
+                </span>
+
+                <span id="boilingPoint">
+                    -
+                </span>
+
+            </div>
+
+            <div class="property">
+
+                <span>
+                    نوع العنصر
+                </span>
+
+                <span id="elementType">
+                    -
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="advanced-card">
+
+            <h3>
+                الاستقرار النووي
+            </h3>
+
+            <div class="stability-meter">
+
+                <div id="stabilityBar" class="stability-fill">
+                </div>
+
+            </div>
+
+            <p id="stabilityText">
+                الذرة مستقرة
+            </p>
+
+        </div>
+
+        <div class="advanced-card">
+
+            <h3>
+                النشاط الإشعاعي
+            </h3>
+
+            <div class="radiation-meter">
+
+                <div id="radiationBar" class="radiation-fill">
+                </div>
+
+            </div>
+
+            <p id="radiationText">
+                لا يوجد نشاط إشعاعي
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- ================================= -->
+    <!-- سجل الأحداث -->
+    <!-- ================================= -->
+
+    <section class="log-section">
+
+        <h2>
+            سجل العمليات
+        </h2>
+
+        <div id="eventLog">
+
+        </div>
+
+    </section>
+
+    <!-- ================================= -->
+    <!-- نافذة الانفجار النووي -->
+    <!-- ================================= -->
+
+    <div id="explosionOverlay">
+
+        <div class="explosion-box">
+
+            <h2>
+                ☢ انهيار نووي
+            </h2>
+
+            <p id="explosionReason">
+
+            </p>
+
+            <button id="closeExplosion">
+                إغلاق
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- لوحة المدارات الإلكترونية -->
+    <!-- ================================= -->
+
+    <section class="orbitals-section">
+
+        <h2>
+            المدارات الإلكترونية
+        </h2>
+
+        <div class="orbitals-grid">
+
+            <div class="orbital-card">
+                <h3>1s</h3>
+                <div id="orbital1s">0</div>
+            </div>
+
+            <div class="orbital-card">
+                <h3>2s</h3>
+                <div id="orbital2s">0</div>
+            </div>
+
+            <div class="orbital-card">
+                <h3>2p</h3>
+                <div id="orbital2p">0</div>
+            </div>
+
+            <div class="orbital-card">
+                <h3>3s</h3>
+                <div id="orbital3s">0</div>
+            </div>
+
+            <div class="orbital-card">
+                <h3>3p</h3>
+                <div id="orbital3p">0</div>
+            </div>
+
+            <div class="orbital-card">
+                <h3>3d</h3>
+                <div id="orbital3d">0</div>
+            </div>
+
+            <div class="orbital-card">
+                <h3>4s</h3>
+                <div id="orbital4s">0</div>
+            </div>
+
+            <div class="orbital-card">
+                <h3>4p</h3>
+                <div id="orbital4p">0</div>
+            </div>
+
+            <div class="orbital-card">
+                <h3>4d</h3>
+                <div id="orbital4d">0</div>
+            </div>
+
+            <div class="orbital-card">
+                <h3>4f</h3>
+                <div id="orbital4f">0</div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ================================= -->
+    <!-- التجارب الجاهزة -->
+    <!-- ================================= -->
+
+    <section class="experiments-section">
+
+        <h2>
+            تجارب جاهزة
+        </h2>
+
+        <div class="experiments-grid">
+
+            <button class="exp-btn" id="expHydrogen">
+                الهيدروجين
+            </button>
+
+            <button class="exp-btn" id="expHelium">
+                الهيليوم
+            </button>
+
+            <button class="exp-btn" id="expCarbon">
+                الكربون
+            </button>
+
+            <button class="exp-btn" id="expOxygen">
+                الأكسجين
+            </button>
+
+            <button class="exp-btn" id="expUranium">
+                اليورانيوم
+            </button>
+
+            <button class="exp-btn" id="expFusion">
+                اندماج شمسي
+            </button>
+
+            <button class="exp-btn" id="expFission">
+                انشطار نووي
+            </button>
+
+            <button class="exp-btn" id="expPlasma">
+                بلازما
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- ================================= -->
+    <!-- الإحصائيات -->
+    <!-- ================================= -->
+
+    <section class="statistics-section">
+
+        <h2>
+            إحصائيات مباشرة
+        </h2>
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+                <span>عدد البروتونات</span>
+                <strong id="statProtons">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>عدد النيوترونات</span>
+                <strong id="statNeutrons">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>عدد الإلكترونات</span>
+                <strong id="statElectrons">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>عدد المدارات</span>
+                <strong id="statShells">0</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>مستوى الإشعاع</span>
+                <strong id="statRadiation">0%</strong>
+            </div>
+
+            <div class="stat-card">
+                <span>مستوى الحرارة</span>
+                <strong id="statTemperature">25°C</strong>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- المدارات -->
+    <div id="orbit1" class="orbit orbit-1"></div>
+    <div id="orbit2" class="orbit orbit-2"></div>
+    <div id="orbit3" class="orbit orbit-3"></div>
+    <div id="orbit4" class="orbit orbit-4"></div>
+    <div id="orbit5" class="orbit orbit-5"></div>
+    <div id="orbit6" class="orbit orbit-6"></div>
+    <div id="orbit7" class="orbit orbit-7"></div>
+
+    <!-- النواة -->
+    <div id="nucleus">
+
+        <div class="nucleus-glow"></div>
+
+        <div id="protons-layer"></div>
+        <div id="neutrons-layer"></div>
+
+        <div class="nucleus-center">
+            <span id="atomSymbolCenter">H</span>
+        </div>
+
+    </div>
+
+    <!-- الإلكترونات -->
+    <div id="electrons-layer"></div>
+
+    <!-- مؤثرات الانفجار -->
+    <div id="explosion-container"></div>
+
+    </div>
+
+    </section>
+
+    <!-- ===================== -->
+    <!-- لوحة المعلومات -->
+    <!-- ===================== -->
+
+    <section class="info-panel">
+
+        <div class="panel-card">
+
+            <h3>معلومات العنصر</h3>
+
+            <div class="info-row">
+                <span>الاسم</span>
+                <span id="elementName">Hydrogen</span>
+            </div>
+
+            <div class="info-row">
+                <span>الرمز</span>
+                <span id="elementSymbol">H</span>
+            </div>
+
+            <div class="info-row">
+                <span>العدد الذري</span>
+                <span id="atomicNumber">1</span>
+            </div>
+
+            <div class="info-row">
+                <span>الكتلة الذرية</span>
+                <span id="atomicMass">1</span>
+            </div>
+
+            <div class="info-row">
+                <span>الشحنة</span>
+                <span id="chargeValue">0</span>
+            </div>
+
+            <div class="info-row">
+                <span>الحالة</span>
+                <span id="stateValue">غاز</span>
+            </div>
+
+            <div class="info-row">
+                <span>الفئة</span>
+                <span id="categoryValue">لافلز</span>
+            </div>
+
+            <div class="info-row">
+                <span>السالبية الكهربية</span>
+                <span id="electroValue">2.20</span>
+            </div>
+
+            <div class="info-row">
+                <span>عدد الروابط</span>
+                <span id="bondValue">1</span>
+            </div>
+
+        </div>
+
+        <div class="panel-card">
+
+            <h3>الإلكترونات في الأغلفة</h3>
+
+            <ul id="shellInfo">
+
+                <li>الغلاف 1 : 1 إلكترون</li>
+
+            </ul>
+
+        </div>
+
+        <div class="panel-card">
+
+            <h3>الإحصائيات</h3>
+
+            <div class="stat-box">
+                <span>الاستقرار</span>
+                <div class="progress">
+                    <div id="stabilityBar"></div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <span>النشاط</span>
+                <div class="progress">
+                    <div id="activityBar"></div>
+                </div>
+            </div>
+
+            <div class="stat-box">
+                <span>الحرارة</span>
+                <div class="progress">
+                    <div id="temperatureBar"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    </main>
+
+    <!-- ===================== -->
+    <!-- الجدول الدوري -->
+    <!-- ===================== -->
+
+    <section class="periodic-section">
+
+        <h2>
+            الجدول الدوري
+        </h2>
+
+        <div id="periodicTable" class="periodic-grid">
+        </div>
+
+    </section>
+
+    <!-- ===================== -->
+    <!-- سجل الأحداث -->
+    <!-- ===================== -->
+
+    <section class="log-section">
+
+        <h2>
+            سجل الأحداث
+        </h2>
+
+        <div id="eventLog" class="event-log">
+
+            <div class="log-item">
+                تم إنشاء الذرة
+            </div>
+
+        </div>
+
+    </section>
+
+    </main>
+
+    <!-- ===================== -->
+    <!-- نافذة العنصر -->
+    <!-- ===================== -->
+
+    <div id="elementModal" class="modal">
+
+        <div class="modal-content">
+
+            <span id="closeModal" class="close-btn">
+                ✖
+            </span>
+
+            <h2 id="modalElementName">
+                Hydrogen
+            </h2>
+
+            <div class="modal-grid">
+
+                <div>
+                    <strong>الرمز:</strong>
+                    <span id="modalSymbol"></span>
+                </div>
+
+                <div>
+                    <strong>العدد الذري:</strong>
+                    <span id="modalAtomicNumber"></span>
+                </div>
+
+                <div>
+                    <strong>الكتلة:</strong>
+                    <span id="modalMass"></span>
+                </div>
+
+                <div>
+                    <strong>الحالة:</strong>
+                    <span id="modalState"></span>
+                </div>
+
+                <div>
+                    <strong>الفئة:</strong>
+                    <span id="modalCategory"></span>
+                </div>
+
+                <div>
+                    <strong>السالبية:</strong>
+                    <span id="modalElectro"></span>
+                </div>
+
+            </div>
+
+            <p id="modalDescription">
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- نافذة الانفجار -->
+    <!-- ===================== -->
+
+    <div id="explosionModal" class="modal">
+
+        <div class="modal-content explosion-box">
+
+            <h2>
+                ☢ انفجار نووي
+            </h2>
+
+            <p>
+                أصبحت الذرة غير مستقرة تماماً
+            </p>
+
+            <button id="restartAfterExplosion">
+                إعادة البناء
+            </button>
+
+        </div>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- نافذة المساعدة -->
+    <!-- ===================== -->
+
+    <div id="helpModal" class="modal">
+
+        <div class="modal-content">
+
+            <span id="closeHelp" class="close-btn">
+                ✖
+            </span>
+
+            <h2>
+                دليل الاستخدام
+            </h2>
+
+            <ul>
+
+                <li>أضف أو احذف بروتونات.</li>
+
+                <li>أضف أو احذف نيوترونات.</li>
+
+                <li>أضف أو احذف إلكترونات.</li>
+
+                <li>اختر أي عنصر من الجدول الدوري.</li>
+
+                <li>سخّن أو برّد الذرة.</li>
+
+                <li>احفظ أو حمّل الذرة.</li>
+
+                <li>شاهد توزيع الإلكترونات.</li>
+
+                <li>راقب الاستقرار النووي.</li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- ===================== -->
+    <!-- Footer -->
+    <!-- ===================== -->
+
+    <footer>
+
+        <p>
+            Atom Laboratory © 2026
+        </p>
+
+    </footer>
+
+    <script src="atom.js"></script>
+
+</body>
+
+</html>
