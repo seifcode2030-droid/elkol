@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة العلوم التفاعلية</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Tahoma, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0a0f1f, #10182b, #0d1b35);
+            min-height: 100vh;
+            color: white;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        header h1 {
+            font-size: 3rem;
+            color: #00e5ff;
+        }
+
+        header p {
+            color: #cfd8dc;
+            margin-top: 10px;
+        }
+
+        .subjects {
+            width: 90%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding-bottom: 50px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, .05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, .1);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            transition: .4s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 0 20px rgba(0, 229, 255, .4);
+        }
+
+        .icon {
+            font-size: 70px;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #b0bec5;
+            min-height: 50px;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            border-radius: 12px;
+            text-decoration: none;
+            background: #00e5ff;
+            color: black;
+            font-weight: bold;
+        }
+
+        .chemistry .icon {
+            color: #00e5ff;
+        }
+
+        .physics .icon {
+            color: #ffeb3b;
+        }
+
+        .biology .icon {
+            color: #4caf50;
+        }
+
+        .geology .icon {
+            color: #795548;
+        }
+
+        .astronomy .icon {
+            color: #9c27b0;
+        }
+
+        .geography .icon {
+            color: #03a9f4;
+        }
+
+        .history .icon {
+            color: #ff9800;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #90a4ae;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+        <h1>بوابة العلوم التفاعلية</h1>
+        <p>مشروع معرض العلوم - تنفيذ عبدالراضي سامح</p>
+    </header>
+
+    <section class="subjects">
+
+        <div class="card chemistry">
+            <div class="icon">🧪</div>
+            <h2>الكيمياء</h2>
+            <p>مختبر التفاعلات الكيميائية التفاعلي</p>
+            <a href="./kemya/elrayeseya.html">دخول</a>
+        </div>
+
+        <div class="card physics">
+            <div class="icon">⚡</div>
+            <h2>الفيزياء</h2>
+            <p>التجارب والقوانين الفيزيائية</p>
+            <a href="#">قريباً</a>
+        </div>
+
+        <div class="card biology">
+            <div class="icon">🧬</div>
+            <h2>الأحياء</h2>
+            <p>الخلية والكائنات الحية</p>
+            <a href="#">قريباً</a>
+        </div>
+
+        <div class="card geology">
+            <div class="icon">🌍</div>
+            <h2>الجيولوجيا</h2>
+            <p>الصخور والمعادن والبراكين</p>
+            <a href="#">قريباً</a>
+        </div>
+
+        <div class="card astronomy">
+            <div class="icon">🌌</div>
+            <h2>الفلك</h2>
+            <p>النجوم والكواكب والمجرات</p>
+            <a href="#">قريباً</a>
+        </div>
+
+        <div class="card geography">
+            <div class="icon">🗺️</div>
+            <h2>الجغرافيا</h2>
+            <p>المناخ والخرائط والبيئات</p>
+            <a href="#">قريباً</a>
+        </div>
+
+        <div class="card history">
+            <div class="icon">📜</div>
+            <h2>التاريخ</h2>
+            <p>الحضارات والأحداث التاريخية</p>
+            <a href="#">قريباً</a>
+        </div>
+
+    </section>
+
+    <footer>
+        © 2026 - Science Lab Hub
+    </footer>
+
+</body>
+
+</html>
