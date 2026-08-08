@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantum Lab Pro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="theme-dark">
+    <div class="space-bg" aria-hidden="true">
+      <div class="stars"></div>
+      <div class="comets"></div>
+    </div>
+
+    <div class="app-shell">
+      <header class="topbar glass-panel">
+        <div class="brand-group">
+          <div class="brand-mark">Q</div>
+          <div>
+            <p class="eyebrow">مختبر علمي تفاعلي</p>
+            <h1>Quantum Lab Pro</h1>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <div class="status-pill">
+            <span class="status-dot"></span>
+            <span id="systemStatus">النظام مستقر</span>
+          </div>
+          <button id="themeToggle" class="icon-button" aria-label="تبديل الوضع">☀️</button>
+        </div>
+      </header>
+
+      <nav class="main-tabs glass-panel" aria-label="قسمات المختبر">
+        <button class="tab-btn active" data-target="atomic-lab">مختبر الذرة</button>
+        <button class="tab-btn" data-target="physics-lab">الفيزياء</button>
+        <button class="tab-btn" data-target="chemistry-lab">الكيمياء</button>
+        <button class="tab-btn" data-target="experiments-lab">المختبر الافتراضي</button>
+        <button class="tab-btn" data-target="ai-lab">الذكاء الاصطناعي</button>
+        <button class="tab-btn" data-target="achievements-lab">الإنجازات</button>
+        <button class="tab-btn" data-target="storage-lab">الحفظ</button>
+        <button class="tab-btn" data-target="stats-lab">الإحصائيات</button>
+      </nav>
+
+      <main class="content-area">
+        <section id="atomic-lab" class="tab-panel active">
+          <div class="section-header">
+            <h2>مختبر الذرة</h2>
+            <p>بناء النواة والمدارات وتقييم الاستقرار</p>
+          </div>
+
+          <div class="atomic-grid">
+            <div class="panel glass-panel atom-builder">
+              <div class="builder-row">
+                <div class="numeric-control">
+                  <span>البروتونات</span>
+                  <div class="step-controls">
+                    <button data-action="dec-protons">−</button>
+                    <strong id="protonCount">0</strong>
+                    <button data-action="inc-protons">＋</button>
+                  </div>
+                </div>
+
+                <div class="numeric-control">
+                  <span>النيوترونات</span>
+                  <div class="step-controls">
+                    <button data-action="dec-neutrons">−</button>
+                    <strong id="neutronCount">0</strong>
+                    <button data-action="inc-neutrons">＋</button>
+                  </div>
+                </div>
+
+                <div class="numeric-control">
+                  <span>الإلكترونات</span>
+                  <div class="step-controls">
+                    <button data-action="dec-electrons">−</button>
+                    <strong id="electronCount">0</strong>
+                    <button data-action="inc-electrons">＋</button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cta-row">
+                <button id="autoDistributeBtn" class="primary-btn">توزيع إلكتروني تلقائي</button>
+                <button id="resetAtomBtn" class="secondary-btn">إعادة ضبط</button>
+              </div>
+
+              <div class="stability-card">
+                <div class="stability-labels">
+                  <span>استقرار الذرة</span>
+                  <strong id="stabilityLabel">غير محددة</strong>
+                </div>
+                <div class="stability-bar">
+                  <div id="stabilityBar" class="stability-fill"></div>
+                </div>
+              </div>
+
+              <div class="element-summary" id="elementSummary">
+                <div class="summary-top">
+                  <div>
+                    <p class="small-label">العنصر المنتخب</p>
+                    <h3 id="selectedElementName">---</h3>
+                  </div>
+                  <span id="selectedElementSymbol" class="element-symbol">--</span>
+                </div>
+                <ul>
+                  <li>العدد الذري: <strong id="selectedAtomicNumber">0</strong></li>
+                  <li>الكتلة: <strong id="selectedAtomicMass">0</strong></li>
+                  <li>الفئة: <strong id="selectedCategory">-</strong></li>
+                  <li>الحالة: <strong id="selectedState">-</strong></li>
+                  <li>السالبية: <strong id="selectedElectronegativity">-</strong></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="panel glass-panel atom-visual-panel">
+              <div id="atomViewport" class="atom-viewport">
+                <div id="nucleusGlow" class="nucleus-glow"></div>
+                <div id="nucleus" class="nucleus"></div>
+                <div id="orbitLayer" class="orbit-layer"></div>
+                <div id="shockwave" class="shockwave" aria-hidden="true"></div>
+                <div id="mushroomCloud" class="mushroom-cloud" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lower-grid">
+            <div class="panel glass-panel periodic-panel">
+              <div class="panel-title-row">
+                <h3>الجدول الدوري الكامل</h3>
+                <input id="elementSearch" type="text" placeholder="ابحث عن عنصر..." />
+              </div>
+              <div id="periodicTable" class="periodic-table"></div>
+            </div>
+
+            <div class="panel glass-panel selected-element-panel">
+              <h3>تفاصيل العنصر</h3>
+              <div id="selectedElementDetails" class="selected-element-data">
+                <p>اختر عنصرًا من الجدول الدوري لعرض بياناته.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="physics-lab" class="tab-panel">
+          <div class="section-header">
+            <h2>الفيزياء</h2>
+            <p>محاكاة الجاذبية والطاقة والكهرباء والمغناطيسية</p>
+          </div>
+
+          <div class="physics-grid">
+            <div class="panel glass-panel">
+              <h3>الجاذبية</h3>
+              <input id="gravityRange" type="range" min="1" max="25" step="0.1" value="9.8" />
+              <div class="metric-row">
+                <span>قيمة الجاذبية</span>
+                <strong id="gravityValue">9.8 m/s²</strong>
+              </div>
+              <div id="gravityVisualization" class="gravity-visualization"></div>
+            </div>
+
+            <div class="panel glass-panel">
+              <h3>الطاقة</h3>
+              <div class="energy-grid">
+                <div class="mini-stat">
+                  <span>حركية</span>
+                  <strong id="kineticEnergy">0 J</strong>
+                </div>
+                <div class="mini-stat">
+                  <span>وضع</span>
+                  <strong id="potentialEnergy">0 J</strong>
+                </div>
+                <div class="mini-stat">
+                  <span>حرارية</span>
+                  <strong id="thermalEnergy">0 J</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel glass-panel">
+              <h3>الكهرباء</h3>
+              <label>الجهد (V)<input id="voltageInput" type="number" value="12" /></label>
+              <label>المقاومة (Ω)<input id="resistanceInput" type="number" value="4" /></label>
+              <label>التيار (A)<input id="currentInput" type="number" value="3" /></label>
+              <button id="calculateElectricityBtn" class="primary-btn">حساب</button>
+              <div class="result-box" id="electricityResult">الشحنة: 0 C</div>
+            </div>
+
+            <div class="panel glass-panel">
+              <h3>المغناطيسية</h3>
+              <input id="magnetRange" type="range" min="0" max="100" value="55" />
+              <div id="magneticField" class="magnetic-field"></div>
+              <div class="metric-row">
+                <span>قوة المجال</span>
+                <strong id="magnetValue">55%</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="chemistry-lab" class="tab-panel">
+          <div class="section-header">
+            <h2>الكيمياء</h2>
+            <p>الروابط والجزيئات والتفاعلات</p>
+          </div>
+
+          <div class="chemistry-grid">
+            <div class="panel glass-panel">
+              <h3>أنواع الروابط</h3>
+              <div class="bond-type-group">
+                <button class="bond-btn active" data-bond="ionic">أيونية</button>
+                <button class="bond-btn" data-bond="covalent">تساهمية</button>
+                <button class="bond-btn" data-bond="metallic">فلزية</button>
+              </div>
+              <div id="bondInfo" class="bond-info">
+                الروابط الأيونية تنتج عن انتقال الإلكترونات بين الذرات.
+              </div>
+            </div>
+
+            <div class="panel glass-panel">
+              <h3>بناء الجزيئات</h3>
+              <div class="molecule-picker">
+                <button class="molecule-btn active" data-molecule="H2O">H₂O</button>
+                <button class="molecule-btn" data-molecule="CO2">CO₂</button>
+                <button class="molecule-btn" data-molecule="NH3">NH₃</button>
+                <button class="molecule-btn" data-molecule="CH4">CH₄</button>
+              </div>
+              <div id="moleculeScene" class="molecule-scene"></div>
+            </div>
+
+            <div class="panel glass-panel">
+              <h3>التفاعلات الكيميائية</h3>
+              <div class="reaction-controls">
+                <select id="reactionSelect">
+                  <option value="H2O">H₂ + O → H₂O</option>
+                  <option value="NaCl">Na + Cl → NaCl</option>
+                  <option value="CO2">C + O₂ → CO₂</option>
+                  <option value="CH4">CH₄ + O₂ → CO₂ + H₂O</option>
+                </select>
+                <button id="runReactionBtn" class="primary-btn">بدء التفاعل</button>
+              </div>
+              <div id="reactionResult" class="result-box">انتظر التفاعل...</div>
+            </div>
+          </div>
+        </section>
+
+        <section id="experiments-lab" class="tab-panel">
+          <div class="section-header">
+            <h2>المختبر الافتراضي</h2>
+            <p>تجارب كيميائية ومحاكاة تفاعلات علمية</p>
+          </div>
+
+          <div class="experiment-grid">
+            <button class="experiment-card" data-experiment="water">
+              <span>تجربة الماء</span>
+              <strong>H₂ + O → H₂O</strong>
+            </button>
+            <button class="experiment-card" data-experiment="salt">
+              <span>تجربة الملح</span>
+              <strong>Na + Cl</strong>
+            </button>
+            <button class="experiment-card" data-experiment="co2">
+              <span>تجربة ثاني أكسيد الكربون</span>
+              <strong>C + O₂</strong>
+            </button>
+            <button class="experiment-card" data-experiment="combustion">
+              <span>تجربة الاحتراق</span>
+              <strong>CH₄ + O₂</strong>
+            </button>
+          </div>
+
+          <div id="experimentLog" class="experiment-log glass-panel">
+            حدد تجربة لبدء المحاكاة...
+          </div>
+        </section>
+
+        <section id="ai-lab" class="tab-panel">
+          <div class="section-header">
+            <h2>المساعد الذكي</h2>
+            <p>شرح العناصر والتفاعلات واستقرار الذرة</p>
+          </div>
+
+          <div class="ai-panel glass-panel">
+            <div id="aiChat" class="ai-chat"></div>
+            <div class="ai-input-row">
+              <input id="aiInput" type="text" placeholder="اسأل عن عنصر أو تفاعل أو استقرار..." />
+              <button id="askAiBtn" class="primary-btn">إرسال</button>
+            </div>
+            <div class="ai-actions">
+              <button class="ai-preset" data-prompt="اشرح هذا العنصر">اشرح العنصر</button>
+              <button class="ai-preset" data-prompt="اشرح هذا التفاعل">اشرح التفاعل</button>
+              <button class="ai-preset" data-prompt="لماذا هذه الذرة غير مستقرة؟">سبب عدم الاستقرار</button>
+            </div>
+          </div>
+        </section>
+
+        <section id="achievements-lab" class="tab-panel">
+          <div class="section-header">
+            <h2>نظام الإنجازات</h2>
+            <p>تتبع تقدمك العلمي</p>
+          </div>
+          <div id="achievementsList" class="achievement-list"></div>
+        </section>
+
+        <section id="storage-lab" class="tab-panel">
+          <div class="section-header">
+            <h2>نظام الحفظ</h2>
+            <p>احفظ التجارب والذرات والجزيئات محليًا</p>
+          </div>
+
+          <div class="storage-actions">
+            <button id="saveStateBtn" class="primary-btn">حفظ الحالة</button>
+            <button id="loadStateBtn" class="secondary-btn">تحميل الحالة</button>
+            <button id="clearStateBtn" class="danger-btn">مسح التخزين</button>
+          </div>
+
+          <div id="storageStatus" class="glass-panel storage-status">
+            لا توجد بيانات محفوظة بعد.
+          </div>
+        </section>
+
+        <section id="stats-lab" class="tab-panel">
+          <div class="section-header">
+            <h2>الإحصائيات</h2>
+            <p>ملخص الأداء العلمي</p>
+          </div>
+
+          <div class="stats-grid">
+            <div class="stat-card glass-panel">
+              <span>عدد الذرات المنشأة</span>
+              <strong id="statsAtoms">0</strong>
+            </div>
+            <div class="stat-card glass-panel">
+              <span>عدد الجزيئات</span>
+              <strong id="statsMolecules">0</strong>
+            </div>
+            <div class="stat-card glass-panel">
+              <span>عدد التفاعلات</span>
+              <strong id="statsReactions">0</strong>
+            </div>
+            <div class="stat-card glass-panel">
+              <span>عدد الانفجارات</span>
+              <strong id="statsExplosions">0</strong>
+            </div>
+            <div class="stat-card glass-panel wide">
+              <span>الطاقة المنتجة</span>
+              <strong id="statsEnergy">0 J</strong>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="elements.js"></script>
+    <script src="physics.js"></script>
+    <script src="chemistry.js"></script>
+    <script src="achievements.js"></script>
+    <script src="storage.js"></script>
+    <script src="sounds.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
