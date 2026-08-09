@@ -2,6 +2,16 @@
    بيانات الذرة
 ========================= */
 
+const shellNames = [
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q"
+];
+
 const atomData = {
 
     protons: 1,
@@ -1520,10 +1530,13 @@ const periodicTable = [
 ========================= */
 
 const maxElectronsPerShell = [
-    2,
-    8,
-    18,
-    32
+    2,   // K
+    8,   // L
+    18,  // M
+    32,  // N
+    32,  // O
+    18,  // P
+    8    // Q
 ];
 
 /* =========================
@@ -1760,64 +1773,80 @@ function calculateShells() {
 
 function renderElectrons() {
 
+    const electronsDiv =
+        document.getElementById("electrons");
+
     electronsDiv.innerHTML = "";
 
-    const shells =
-        calculateShells();
+    let remaining =
+        atomData.electrons;
 
     const shellRadius = [
-        75,
-        125,
-        175,
-        225
+        80,
+        130,
+        180,
+        230,
+        280,
+        330,
+        380
     ];
 
-    shells.forEach(
-        (count, shellIndex) => {
+    const electronSize =
+        getElectronSize(atomData.electrons);
 
-            for (
-                let i = 0;
-                i < count;
-                i++
-            ) {
+    for(
+        let shell = 0;
+        shell < maxElectronsPerShell.length;
+        shell++
+    ){
 
-                const angle =
-                    (360 / count) * i;
+        let count = Math.min(
+            remaining,
+            maxElectronsPerShell[shell]
+        );
 
-                const electron =
-                    document.createElement("div");
+        remaining -= count;
 
-                electron.className =
-                    "electron";
+        if(count <= 0) continue;
 
-                const x =
-                    Math.cos(
-                        angle *
-                        Math.PI / 180
-                    ) *
-                    shellRadius[shellIndex];
+        for(let i = 0; i < count; i++){
 
-                const y =
-                    Math.sin(
-                        angle *
-                        Math.PI / 180
-                    ) *
-                    shellRadius[shellIndex];
+            let angle =
+                (360 / count) * i;
 
-                electron.style.left =
-                    `calc(50% + ${x}px - 7px)`;
+            let x =
+                Math.cos(
+                    angle * Math.PI / 180
+                ) * shellRadius[shell];
 
-                electron.style.top =
-                    `calc(50% + ${y}px - 7px)`;
+            let y =
+                Math.sin(
+                    angle * Math.PI / 180
+                ) * shellRadius[shell];
 
-                electronsDiv.appendChild(
-                    electron
-                );
+            let electron =
+                document.createElement("div");
 
-            }
+            electron.className =
+                "electron";
 
-        });
+            electron.style.width =
+                electronSize + "px";
 
+            electron.style.height =
+                electronSize + "px";
+
+            electron.style.left =
+                `calc(50% + ${x}px - ${electronSize/2}px)`;
+
+            electron.style.top =
+                `calc(50% + ${y}px - ${electronSize/2}px)`;
+
+            electronsDiv.appendChild(
+                electron
+            );
+        }
+    }
 }
 
 /* =========================
@@ -1887,18 +1916,15 @@ function updateShellInfo() {
     const shells =
         calculateShells();
 
-    shells.forEach(
-        (count, index) => {
+    shells.forEach((value, index) => {
 
-            const li =
-                document.createElement("li");
+        let li = document.createElement("li");
 
-            li.textContent =
-                `المستوى ${index + 1}: ${count} إلكترون`;
+        li.textContent =
+            `${shellNames[index]} : ${value} إلكترون`;
 
-            shellInfo.appendChild(li);
-
-        });
+        shellInfo.appendChild(li);
+    });
 
 }
 
@@ -2656,28 +2682,6 @@ function createElementSelect() {
 }
 
 /* =========================
-   زر تحميل عنصر
-========================= */
-
-document.getElementById(
-    "loadElement"
-).addEventListener(
-    "click",
-    () => {
-
-        const value =
-            document.getElementById(
-                "elementSelect"
-            ).value;
-
-        if (!value) return;
-
-        selectElement(value);
-
-    }
-);
-
-/* =========================
    دوران الإلكترونات
 ========================= */
 
@@ -2814,3 +2818,115 @@ window.addEventListener(
 
     }
 );
+
+// =========================
+// أحجام البروتونات والنيوترونات
+// =========================
+function getNucleonSize(count) {
+
+    if (count < 20) return 22;
+
+    if (count < 50) return 18;
+
+    if (count < 100) return 14;
+
+    if (count < 200) return 10;
+
+    return 8;
+}
+
+// =========================
+// أحجام الإلكترونات
+// =========================
+function getElectronSize(count) {
+
+    if (count < 10) return 14;
+
+    if (count < 30) return 12;
+
+    if (count < 60) return 10;
+
+    if (count < 100) return 8;
+
+    return 6;
+}
+
+// =========================
+// رسم النواة
+// =========================
+function renderNucleus() {
+
+    const nucleus =
+        document.getElementById("nucleus");
+
+    nucleus.innerHTML = "";
+
+    const totalNucleons =
+        atomData.protons + atomData.neutrons;
+
+    const particleSize =
+        getNucleonSize(totalNucleons);
+
+    const nucleusSize =
+        Math.min(
+            140,
+            40 + totalNucleons * 0.5
+        );
+
+    nucleus.style.width =
+        nucleusSize + "px";
+
+    nucleus.style.height =
+        nucleusSize + "px";
+
+    const particles = [];
+
+    for (let i = 0; i < atomData.protons; i++) {
+
+        particles.push({
+            type: "proton"
+        });
+    }
+
+    for (let i = 0; i < atomData.neutrons; i++) {
+
+        particles.push({
+            type: "neutron"
+        });
+    }
+
+    particles.forEach((particle, index) => {
+
+        const angle =
+            index * 137.5 * Math.PI / 180;
+
+        const radius =
+            Math.sqrt(index) * 6;
+
+        const x =
+            radius * Math.cos(angle);
+
+        const y =
+            radius * Math.sin(angle);
+
+        const div =
+            document.createElement("div");
+
+        div.className =
+            particle.type;
+
+        div.style.width =
+            particleSize + "px";
+
+        div.style.height =
+            particleSize + "px";
+
+        div.style.left =
+            `calc(50% + ${x}px - ${particleSize / 2}px)`;
+
+        div.style.top =
+            `calc(50% + ${y}px - ${particleSize / 2}px)`;
+
+        nucleus.appendChild(div);
+    });
+}
